@@ -1,0 +1,55 @@
+name: Build project
+run-name: ${{ github.actor }} Running build.
+on: [push]
+jobs:
+  build-express-server-helper:
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+    - name: Use Node.js
+      uses: actions/setup-node@main
+      with:
+        node-version: 20.15.0
+    
+    - name: Check out repository code
+      uses: actions/checkout@main
+
+    # Setup .npmrc file to publish to GitHub Packages
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20.15.0
+        registry-url: 'https://npm.pkg.github.com'
+        # Defaults to the user or organization that owns the workflow file
+        scope: '@tjsr'
+
+    - name: Cache node modules
+      id: cache-npm
+      uses: actions/cache@main
+      env:
+        cache-name: cache-node-modules
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        path: ~/.npm
+        # todo - change this so we are less restrictive on package-lock changes
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+    - run: npm ci
+
+    - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+      name: List the state of node modules
+      continue-on-error: true
+      run: npm list
+
+    - run: npm run test
+    - run: npm run build
+
+    - name: Run lint at end on all other branches
+      if: github.ref != 'refs/head/main' && github.ref != 'refs/head/prod'
+      run: |
+        npm publish --dry-run
+  

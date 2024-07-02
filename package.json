@@ -1,0 +1,40 @@
+{
+  "name": "@tjsr/npm-library-template",
+  "version": "0.0.1",
+  "description": "Template npm project",
+  "type": "module",
+  "main": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "scripts": {
+    "test": "test",
+    "clean": "npx rimraf dist build",
+    "clean:all": "npx rimraf dist build node_modules",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjsr/express-server-helper.git"
+  },
+  "keywords": [
+    "Express"
+  ],
+  "author": "Tim Rowe <tim@tjsr.id.au>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tjsr/express-server-helper/issues"
+  },
+  "homepage": "https://github.com/tjsr/express-server-helper#readme",
+  "devDependencies": {
+    "rimraf": "^5.0.7",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.3",
+    "vitest": "^1.6.0"
+  }
+}
