@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "test": "test",
+    "test": "vitest --run",
     "clean": "npx rimraf dist build",
     "clean:all": "npx rimraf dist build node_modules",
     "build": "tsc"
