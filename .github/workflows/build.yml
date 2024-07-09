@@ -2,7 +2,7 @@ name: Build project
 run-name: ${{ github.actor }} Running build.
 on: [push]
 jobs:
-  build-express-server-helper:
+  build:
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

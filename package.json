@@ -36,8 +36,9 @@
   "homepage": "https://github.com/tjsr/express-server-helper#readme",
   "devDependencies": {
     "@tjsr/eslint-config": "github:tjsr/eslint-config#main",
-    "rimraf": "^5.0.7",
-    "tsx": "^4.16.0",
+    "@types/node": "^20.14.10",
+    "rimraf": "^6.0.0",
+    "tsx": "^4.16.2",
     "typescript": "^5.5.3",
     "vitest": "^1.6.0"
   }
